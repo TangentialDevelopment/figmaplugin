@@ -1,18 +1,17 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button>
-<p>test</p>
+<h2>Task Manager</h2>
+<button id="create">Create Task</button>
+<button id="delete">Delete Task</button>
 <script>
 
 document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
+  parent.postMessage({ pluginMessage: { type: 'create task' } }, '*')
+  onmessage = (event) => {
+    console.log("message: ", event.data.pluginMessage)
+  }
 }
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+document.getElementById('delete').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'delete' } }, '*')
 }
 
 </script>
