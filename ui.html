@@ -1,17 +1,28 @@
-<h2>Task Manager</h2>
-<button id="create">Create Task</button>
-<button id="delete">Delete Task</button>
-<script>
-
-document.getElementById('create').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'create task' } }, '*')
-  onmessage = (event) => {
-    console.log("message: ", event.data.pluginMessage)
+<style>
+  p {
+    color: red;
   }
-}
+</style>
 
-document.getElementById('delete').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'delete' } }, '*')
-}
+<h2>Task Manager</h2>
+<div class="title">
+  <p>To-Do</p>
+  <p class="todo"></p>
+  <p>Completed</p>
+  <p class="done"></p>
+</div>
+<button id="create">Add New Task</button>
+<button id="delete">Delete Task</button>
 
+<script>
+  document.getElementById('create').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'create task' } }, '*')
+    onmessage = (event) => {
+      console.log("message: ", event.data.pluginMessage)
+    }
+  }
+
+  document.getElementById('delete').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'delete' } }, '*')
+  }
 </script>

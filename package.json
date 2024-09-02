@@ -7,7 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build -- --watch",
+    "sass": "sass --watch source/scss/:compiled/css/ --style compressed"
   },
   "author": "",
   "license": "",
@@ -40,5 +41,8 @@
         }
       ]
     }
+  },
+  "dependencies": {
+    "sass": "^1.77.8"
   }
 }
