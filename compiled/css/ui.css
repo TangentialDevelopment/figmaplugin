@@ -1,1 +1,1 @@
-.title{display:flex;flex-direction:row}.title p{margin:50px}/*# sourceMappingURL=ui.css.map */
+.title{display:flex;flex-direction:row;justify-content:space-around}.title .title-child{margin:50px;flex-grow:6}.active{border-bottom:1px blue solid}/*# sourceMappingURL=ui.css.map */

@@ -1,8 +1,14 @@
 .title {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 
-    p {
+    .title-child {
         margin: 50px;
+        flex-grow: 6;
     }
+}
+
+.active {
+    border-bottom: 1px blue solid;
 }
