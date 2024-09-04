@@ -4,11 +4,29 @@
     justify-content: space-around;
 
     .title-child {
+        max-width: 300px;
         margin: 50px;
         flex-grow: 6;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        font-size: 24px;
+        color: grey;
+        justify-content: center;
+        
+        p {
+            margin: 20px;
+        }
+
+        .todo {
+            padding: 1px 7px;
+            background-color: lightblue;
+            border-radius: 50px;
+        }
     }
 }
 
 .active {
     border-bottom: 1px blue solid;
+    color: darkgrey;
 }

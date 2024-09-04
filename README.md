@@ -4,3 +4,4 @@
 08-30 internet outage codes
 09-02 initialized testing enviroment  
 09-03 initialized styling  
+09-04 styled base page  
