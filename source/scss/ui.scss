@@ -1,3 +1,8 @@
+.box {
+    max-width: 80%;
+    padding: 10%;
+}
+
 .title {
     display: flex;
     flex-direction: row;
@@ -29,4 +34,19 @@
 .active {
     border-bottom: 1px blue solid;
     color: darkgrey;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+
+    input {
+        width: 100%;
+        border: none;
+        // background-color: lightgrey;
+    }
+
+    input::placeholder {
+        padding-left: 15px;
+    }
 }
