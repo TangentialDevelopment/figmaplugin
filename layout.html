@@ -35,8 +35,8 @@
                 <p class="done">2</p>
             </div>
         </div>
-        <form action="create">
-            <input type="text" id="create" placeholder="+ Add New Task">
+        <form action="create" id="form">
+            <input type="text" class="create" placeholder="+ Add New Task"  oninput="typed()">
         </form>
         <!-- <button id="create">Add New Task</button> -->
         <!-- <button id="delete">Delete Task</button> -->
@@ -44,6 +44,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
+        function typed() {
+            let input = document.querySelectorAll('.create:last-child')[0];
+            if (input.value != '') {
+                let newInput = document.createElement('input');
+                newInput.setAttribute('type',"text");
+                newInput.setAttribute('class',"create");
+                newInput.setAttribute('placeholder',"+ Add New Task");
+                newInput.setAttribute('oninput',"typed()");
+
+                document.getElementById('form').appendChild(newInput);
+            }
+        }
+
         document.getElementById('completed').onclick = () => {
             $('#list').removeClass('active');
             $('#completed').addClass('active');
@@ -53,7 +66,7 @@
             $('#completed').removeClass('active');
         }
 
-        document.getElementById('create').onclick = () => {
+        document.getElementsByClassName('create').onclick = () => {
             parent.postMessage({ pluginMessage: { type: 'create task' } }, '*')
             onmessage = (event) => {
             console.log("message: ", event.data.pluginMessage)
