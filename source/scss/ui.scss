@@ -37,10 +37,13 @@
 }
 
 form {
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     padding: 0 5%;
 
     input {
+        flex: 50%;
         width: 100%;
         border: none;
         // background-color: lightgrey;
