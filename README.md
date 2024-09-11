@@ -9,3 +9,4 @@
 09-06 added switching  
 09-09 adding things to the list  
 09-10 added close button  
+09-11 list counts and switching  

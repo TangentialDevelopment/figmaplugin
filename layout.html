@@ -28,22 +28,37 @@
         <div class="title">
             <div id="list" class="title-child active">
                 <p>To-Do</p>
-                <p class="todo">0</p>
+                <p class="todo" id="todoCount"></p>
             </div>
             <div id="completed" class="title-child">
                 <p>Completed</p>
-                <p class="done">2</p>
+                <p class="done" id="doneCount"></p>
             </div>
         </div>
         <form action="create" id="form">
             <input type="text" class="task 0" placeholder="+ Add New Task"  oninput="typed(0)">
         </form>
+        <form action="display" id="done">
+            <!-- <input type="text" placeholder="test">
+            <input type="text" placeholder="test">
+            <input type="text" placeholder="test"> -->
+        </form>
+
+        <!-- <input type="text" id="field1">
+        <button onclick="setCookie()">Save Data</button> -->
+
         <!-- <button id="create">Add New Task</button> -->
         <!-- <button id="delete">Delete Task</button> -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
+        $('#done').hide();
+        var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+        document.getElementById('doneCount').innerHTML = doneCount;
+        var doneCount = document.getElementById('form').getElementsByTagName('input').length;
+        document.getElementById('todoCount').innerHTML = doneCount - 1;
+
         count = 0;
         function typed(update) {
             let size = document.querySelectorAll('.task').length;
@@ -65,16 +80,25 @@
                 newInput.setAttribute('oninput',"typed(" + count + ")");
 
                 document.getElementById('form').appendChild(newInput);
+
+                var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+                document.getElementById('doneCount').innerHTML = doneCount;
+                var doneCount = document.getElementById('form').getElementsByTagName('input').length;
+                document.getElementById('todoCount').innerHTML = doneCount - 1;
             }
         }
 
         document.getElementById('completed').onclick = () => {
             $('#list').removeClass('active');
+            $('#form').hide();
             $('#completed').addClass('active');
+            $('#done').show();
         }
         document.getElementById('list').onclick = () => {
             $('#list').addClass('active');
+            $('#form').show();
             $('#completed').removeClass('active');
+            $('#done').hide();
         }
 
         document.getElementsByClassName('create').onclick = () => {
