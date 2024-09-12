@@ -67,8 +67,10 @@
             if (input.value != '') {
                 let close = document.createElement('button');
                 let attr = 'btn btn-primary delete ' + update;
+                // close.setAttribute('type',"button");
                 close.setAttribute('class', attr);
                 close.setAttribute("type", 'button');
+                close.setAttribute("onclick", 'finished('+ update +')');
                 close.innerHTML = 'x';
                 document.getElementById('form').appendChild(close);
 
@@ -88,6 +90,29 @@
             }
         }
 
+        function finished(index) {
+            let tasklist = document.getElementById('form').getElementsByTagName('input');
+            let tasklistbtn = document.getElementById('form').getElementsByTagName('button');
+
+            for(let i=0; i<tasklist.length; i++) {
+                let value = tasklist[i].classList[1];
+                if (value == index) {
+                    var place = tasklist[i];
+                    var btn = tasklistbtn[i]
+                }
+            }
+
+            let entry = place.value;
+
+            place.remove();
+            btn.remove();
+
+            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+            document.getElementById('doneCount').innerHTML = doneCount;
+            var doneCount = document.getElementById('form').getElementsByTagName('input').length;
+            document.getElementById('todoCount').innerHTML = doneCount - 1;
+        }
+
         document.getElementById('completed').onclick = () => {
             $('#list').removeClass('active');
             $('#form').hide();
@@ -100,17 +125,6 @@
             $('#completed').removeClass('active');
             $('#done').hide();
         }
-
-        document.getElementsByClassName('create').onclick = () => {
-            parent.postMessage({ pluginMessage: { type: 'create task' } }, '*')
-            onmessage = (event) => {
-            console.log("message: ", event.data.pluginMessage)
-            }
-        }
-    
-        // document.getElementById('delete').onclick = () => {
-        //     parent.postMessage({ pluginMessage: { type: 'delete' } }, '*')
-        // }
     </script>  
 </body>
 </html>
