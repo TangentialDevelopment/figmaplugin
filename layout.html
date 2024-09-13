@@ -38,11 +38,7 @@
         <form action="create" id="form">
             <input type="text" class="task 0" placeholder="+ Add New Task"  oninput="typed(0)">
         </form>
-        <form action="display" id="done">
-            <!-- <input type="text" placeholder="test">
-            <input type="text" placeholder="test">
-            <input type="text" placeholder="test"> -->
-        </form>
+        <form action="display" id="done"></form>
 
         <!-- <input type="text" id="field1">
         <button onclick="setCookie()">Save Data</button> -->
@@ -67,7 +63,6 @@
             if (input.value != '') {
                 let close = document.createElement('button');
                 let attr = 'btn btn-primary delete ' + update;
-                // close.setAttribute('type',"button");
                 close.setAttribute('class', attr);
                 close.setAttribute("type", 'button');
                 close.setAttribute("onclick", 'finished('+ update +')');
@@ -103,6 +98,20 @@
             }
 
             let entry = place.value;
+            let done = document.createElement('input');
+            done.setAttribute('type',"text");
+            done.setAttribute('class',"task "+place);
+            done.setAttribute('value',entry);
+            done.setAttribute('oninput',"typed(" + place + ")");
+            document.getElementById('done').appendChild(done);
+            let open = document.createElement('button');
+            let attr = 'btn btn-primary reopen ' + place;
+            open.setAttribute('class', attr);
+            open.setAttribute("type", 'button');
+            // open.setAttribute("onclick", 'reopen('+ place +')');
+            open.innerHTML = 'x';
+            document.getElementById('done').appendChild(open);
+
 
             place.remove();
             btn.remove();

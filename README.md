@@ -11,3 +11,4 @@
 09-10 added close button  
 09-11 list counts and switching  
 09-12 removing list items  
+09-13 move removed items to completed  
