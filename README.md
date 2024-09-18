@@ -14,3 +14,4 @@
 09-13 move removed items to completed  
 09-16 complementary task switching  
 09-17 pushing demo online  
+09-18 made tasks functions  

@@ -36,7 +36,7 @@
             </div>
         </div>
         <form action="create" id="form">
-            <input type="text" class="task 0" placeholder="+ Add New Task"  oninput="typed(0)">
+            <input type="text" class="drag-item task 0" draggable="true" placeholder="+ Add New Task"  oninput="typed(0)">
         </form>
         <form action="display" id="done"></form>
 
@@ -56,6 +56,49 @@
         document.getElementById('todoCount').innerHTML = doneCount - 1;
 
         count = 0;
+
+        function newTask(index) {
+            let newInput = document.createElement('input');
+            newInput.setAttribute('type',"text");
+            newInput.setAttribute('class',"drag-item task " + index);
+            newInput.setAttribute('draggable', true);
+            newInput.setAttribute('placeholder',"+ Add New Task");
+            newInput.setAttribute('oninput',"typed(" + index + ")");
+
+            return newInput;
+        }
+
+        function doneTask(index, place, entry) {
+            let done = document.createElement('input');
+            done.setAttribute('type',"text");
+            done.setAttribute('class',"task "+ index);
+            done.setAttribute('value', entry);
+            done.setAttribute('oninput',"typed(" + place + ")");
+            document.getElementById('done').appendChild(done);
+            let open = document.createElement('button');
+            let attr = 'btn btn-primary reopen ' + index;
+            open.setAttribute('class', attr);
+            open.setAttribute("type", 'button');
+            open.setAttribute("onclick", 'reopen('+ index +')');
+            open.innerHTML = 'x';
+            document.getElementById('done').appendChild(open);
+        }
+
+        function reopenTask(index, entry) {
+            let reopenbtn = document.createElement('button');
+            let attr = 'btn btn-primary reopen ' + index;
+            reopenbtn.setAttribute('class', attr);
+            reopenbtn.setAttribute("type", 'button');
+            reopenbtn.setAttribute("onclick", 'finished('+ index +')');
+            reopenbtn.innerHTML = 'x';
+            document.getElementById('form').prepend(reopenbtn);
+            let reopen = document.createElement('input');
+            reopen.setAttribute('type',"text");
+            reopen.setAttribute('class',"task "+ index);
+            reopen.setAttribute('value', entry);
+            document.getElementById('form').prepend(reopen);
+        }
+
         function typed(update) {
             let size = document.querySelectorAll('.task').length;
             let input = document.querySelectorAll('.task')[size-1];
@@ -70,13 +113,7 @@
                 document.getElementById('form').appendChild(close);
 
                 count += 1;
-                let newInput = document.createElement('input');
-                newInput.setAttribute('type',"text");
-                newInput.setAttribute('class',"task "+count);
-                newInput.setAttribute('placeholder',"+ Add New Task");
-                newInput.setAttribute('oninput',"typed(" + count + ")");
-
-                document.getElementById('form').appendChild(newInput);
+                document.getElementById('form').appendChild(newTask(count));
 
                 var doneCount = document.getElementById('done').getElementsByTagName('input').length;
                 document.getElementById('doneCount').innerHTML = doneCount;
@@ -90,7 +127,7 @@
             let tasklistbtn = document.getElementById('form').getElementsByTagName('button');
 
             for(let i=0; i<tasklist.length; i++) {
-                let value = tasklist[i].classList[1];
+                let value = tasklist[i].classList[2];
                 if (value == index) {
                     var place = tasklist[i];
                     var btn = tasklistbtn[i]
@@ -98,20 +135,7 @@
             }
 
             let entry = place.value;
-            let done = document.createElement('input');
-            done.setAttribute('type',"text");
-            done.setAttribute('class',"task "+ index);
-            done.setAttribute('value', entry);
-            done.setAttribute('oninput',"typed(" + place + ")");
-            document.getElementById('done').appendChild(done);
-            let open = document.createElement('button');
-            let attr = 'btn btn-primary reopen ' + index;
-            open.setAttribute('class', attr);
-            open.setAttribute("type", 'button');
-            open.setAttribute("onclick", 'reopen('+ index +')');
-            open.innerHTML = 'x';
-            document.getElementById('done').appendChild(open);
-
+            doneTask(index, place, entry);
 
             place.remove();
             btn.remove();
@@ -135,18 +159,7 @@
             }
 
             let entry = place.value;
-            let reopenbtn = document.createElement('button');
-            let attr = 'btn btn-primary reopen ' + index;
-            reopenbtn.setAttribute('class', attr);
-            reopenbtn.setAttribute("type", 'button');
-            reopenbtn.setAttribute("onclick", 'finished('+ index +')');
-            reopenbtn.innerHTML = 'x';
-            document.getElementById('form').prepend(reopenbtn);
-            let reopen = document.createElement('input');
-            reopen.setAttribute('type',"text");
-            reopen.setAttribute('class',"task "+ index);
-            reopen.setAttribute('value', entry);
-            document.getElementById('form').prepend(reopen);
+            reopenTask(index, entry);
           
 
             place.remove();
