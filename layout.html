@@ -35,7 +35,7 @@
                 <p class="done" id="doneCount"></p>
             </div>
         </div>
-        <form action="create" id="form">
+        <form action="create" id="form" class="drag-list">
             <input type="text" class="drag-item task 0" draggable="true" placeholder="+ Add New Task"  oninput="typed(0)">
         </form>
         <form action="display" id="done"></form>
@@ -71,7 +71,8 @@
         function doneTask(index, place, entry) {
             let done = document.createElement('input');
             done.setAttribute('type',"text");
-            done.setAttribute('class',"task "+ index);
+            done.setAttribute('class',"drag-item task "+ index);
+            done.setAttribute('draggable', true);
             done.setAttribute('value', entry);
             done.setAttribute('oninput',"typed(" + place + ")");
             document.getElementById('done').appendChild(done);
@@ -94,7 +95,8 @@
             document.getElementById('form').prepend(reopenbtn);
             let reopen = document.createElement('input');
             reopen.setAttribute('type',"text");
-            reopen.setAttribute('class',"task "+ index);
+            reopen.setAttribute('class',"drag-item task "+ index);
+            reopen.setAttribute('draggable', true);
             reopen.setAttribute('value', entry);
             document.getElementById('form').prepend(reopen);
         }
@@ -181,6 +183,53 @@
             $('#form').show();
             $('#completed').removeClass('active');
             $('#done').hide();
+        }
+        
+        const dragList = document.getElementById('form');
+        let draggedItem = null;
+
+        dragList.addEventListener('dragstart', handleDragStart);
+        dragList.addEventListener('dragover', handleDragOver);
+        dragList.addEventListener('drop', handleDrop);
+
+        function handleDragStart(event) {
+            draggedItem = event.target;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/html', draggedItem.innerHTML);
+            event.target.style.opacity = '0.5';
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            const targetItem = event.target;
+            if (targetItem !== draggedItem && targetItem.classList.contains('drag-item')) {
+                    const boundingRect = targetItem.getBoundingClientRect();
+                    const offset = boundingRect.y + (boundingRect.height / 2);
+                if (event.clientY - offset > 0) {
+                    targetItem.style.borderBottom = 'solid 2px #000';
+                    targetItem.style.borderTop = '';
+                } else {
+                    targetItem.style.borderTop = 'solid 2px #000';
+                    targetItem.style.borderBottom = '';
+                }
+            }
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const targetItem = event.target;
+            if (targetItem !== draggedItem && targetItem.classList.contains('drag-item')) {
+                if (event.clientY > targetItem.getBoundingClientRect().top + (targetItem.offsetHeight / 2)) {
+                    targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling);
+                } else {
+                    targetItem.parentNode.insertBefore(draggedItem, targetItem);
+                }
+            }
+            targetItem.style.borderTop = '';
+            targetItem.style.borderBottom = '';
+            draggedItem.style.opacity = '';
+            draggedItem = null;
         }
     </script>  
 </body>
