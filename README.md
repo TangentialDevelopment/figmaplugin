@@ -16,3 +16,4 @@
 09-17 pushing demo online  
 09-18 made tasks functions  
 09-19 introduced draggability  
+09-20 cosmetic draggability  

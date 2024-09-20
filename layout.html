@@ -36,7 +36,7 @@
             </div>
         </div>
         <form action="create" id="form" class="drag-list">
-            <input type="text" class="drag-item task 0" draggable="true" placeholder="+ Add New Task"  oninput="typed(0)">
+            <input type="text" class="task 0" draggable="true" placeholder="+ Add New Task"  oninput="typed(0)">
         </form>
         <form action="display" id="done"></form>
 
@@ -56,11 +56,10 @@
         document.getElementById('todoCount').innerHTML = doneCount - 1;
 
         count = 0;
-
         function newTask(index) {
             let newInput = document.createElement('input');
             newInput.setAttribute('type',"text");
-            newInput.setAttribute('class',"drag-item task " + index);
+            newInput.setAttribute('class',"task " + index);
             newInput.setAttribute('draggable', true);
             newInput.setAttribute('placeholder',"+ Add New Task");
             newInput.setAttribute('oninput',"typed(" + index + ")");
@@ -71,7 +70,7 @@
         function doneTask(index, place, entry) {
             let done = document.createElement('input');
             done.setAttribute('type',"text");
-            done.setAttribute('class',"drag-item task "+ index);
+            done.setAttribute('class',"task "+ index);
             done.setAttribute('draggable', true);
             done.setAttribute('value', entry);
             done.setAttribute('oninput',"typed(" + place + ")");
@@ -95,7 +94,7 @@
             document.getElementById('form').prepend(reopenbtn);
             let reopen = document.createElement('input');
             reopen.setAttribute('type',"text");
-            reopen.setAttribute('class',"drag-item task "+ index);
+            reopen.setAttribute('class',"task "+ index);
             reopen.setAttribute('draggable', true);
             reopen.setAttribute('value', entry);
             document.getElementById('form').prepend(reopen);
@@ -106,13 +105,17 @@
             let input = document.querySelectorAll('.task')[size-1];
             
             if (input.value != '') {
+                let draggable = document.createElement('div')
+                draggable.setAttribute('class', 'drag-item');
                 let close = document.createElement('button');
                 let attr = 'btn btn-primary delete ' + update;
                 close.setAttribute('class', attr);
                 close.setAttribute("type", 'button');
                 close.setAttribute("onclick", 'finished('+ update +')');
                 close.innerHTML = 'x';
-                document.getElementById('form').appendChild(close);
+                draggable.appendChild(input);
+                draggable.appendChild(close);
+                document.getElementById('form').appendChild(draggable)
 
                 count += 1;
                 document.getElementById('form').appendChild(newTask(count));
@@ -129,7 +132,7 @@
             let tasklistbtn = document.getElementById('form').getElementsByTagName('button');
 
             for(let i=0; i<tasklist.length; i++) {
-                let value = tasklist[i].classList[2];
+                let value = tasklist[i].classList[1];
                 if (value == index) {
                     var place = tasklist[i];
                     var btn = tasklistbtn[i]
