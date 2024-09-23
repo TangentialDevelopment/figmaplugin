@@ -35,8 +35,10 @@
                 <p class="done" id="doneCount"></p>
             </div>
         </div>
-        <form action="create" id="form" class="drag-list">
-            <input type="text" class="task 0" draggable="true" placeholder="+ Add New Task"  oninput="typed(0)">
+        <form action="create" id="form">
+            <ul id="openTasks">
+                <li><input type="text" class="task 0"  placeholder="+ Add New Task"  oninput="typed(0)"></li>
+            </ul>
         </form>
         <form action="display" id="done"></form>
 
@@ -60,7 +62,7 @@
             let newInput = document.createElement('input');
             newInput.setAttribute('type',"text");
             newInput.setAttribute('class',"task " + index);
-            newInput.setAttribute('draggable', true);
+            // newInput.setAttribute('draggable', true);
             newInput.setAttribute('placeholder',"+ Add New Task");
             newInput.setAttribute('oninput',"typed(" + index + ")");
 
@@ -75,6 +77,7 @@
             done.setAttribute('value', entry);
             done.setAttribute('oninput',"typed(" + place + ")");
             document.getElementById('done').appendChild(done);
+
             let open = document.createElement('button');
             let attr = 'btn btn-primary reopen ' + index;
             open.setAttribute('class', attr);
@@ -105,8 +108,8 @@
             let input = document.querySelectorAll('.task')[size-1];
             
             if (input.value != '') {
-                let draggable = document.createElement('div')
-                draggable.setAttribute('class', 'drag-item');
+                let draggable = document.createElement('li')
+                draggable.setAttribute('id', update);
                 let close = document.createElement('button');
                 let attr = 'btn btn-primary delete ' + update;
                 close.setAttribute('class', attr);
@@ -115,7 +118,8 @@
                 close.innerHTML = 'x';
                 draggable.appendChild(input);
                 draggable.appendChild(close);
-                document.getElementById('form').appendChild(draggable)
+                document.getElementById('openTasks').appendChild(draggable);
+
 
                 count += 1;
                 document.getElementById('form').appendChild(newTask(count));
@@ -186,53 +190,6 @@
             $('#form').show();
             $('#completed').removeClass('active');
             $('#done').hide();
-        }
-        
-        const dragList = document.getElementById('form');
-        let draggedItem = null;
-
-        dragList.addEventListener('dragstart', handleDragStart);
-        dragList.addEventListener('dragover', handleDragOver);
-        dragList.addEventListener('drop', handleDrop);
-
-        function handleDragStart(event) {
-            draggedItem = event.target;
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData('text/html', draggedItem.innerHTML);
-            event.target.style.opacity = '0.5';
-        }
-
-        function handleDragOver(event) {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'move';
-            const targetItem = event.target;
-            if (targetItem !== draggedItem && targetItem.classList.contains('drag-item')) {
-                    const boundingRect = targetItem.getBoundingClientRect();
-                    const offset = boundingRect.y + (boundingRect.height / 2);
-                if (event.clientY - offset > 0) {
-                    targetItem.style.borderBottom = 'solid 2px #000';
-                    targetItem.style.borderTop = '';
-                } else {
-                    targetItem.style.borderTop = 'solid 2px #000';
-                    targetItem.style.borderBottom = '';
-                }
-            }
-        }
-
-        function handleDrop(event) {
-            event.preventDefault();
-            const targetItem = event.target;
-            if (targetItem !== draggedItem && targetItem.classList.contains('drag-item')) {
-                if (event.clientY > targetItem.getBoundingClientRect().top + (targetItem.offsetHeight / 2)) {
-                    targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling);
-                } else {
-                    targetItem.parentNode.insertBefore(draggedItem, targetItem);
-                }
-            }
-            targetItem.style.borderTop = '';
-            targetItem.style.borderBottom = '';
-            draggedItem.style.opacity = '';
-            draggedItem = null;
         }
     </script>  
 </body>

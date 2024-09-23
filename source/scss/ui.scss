@@ -35,22 +35,20 @@
     color: darkgrey;
 }
 
-form {
+#form {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
     padding: 0 5%;
 
-    .drag-item {
-        flex: 75%;
-        width: 100%;
+    ul {
+        list-style: none;
+        min-width: 100%;
+    }
 
-        input {
-            width: 96%;
-            border: none;
-            // background-color: lightgrey;
-            cursor: move;
-        }
+    input {
+        flex: 90%;
+        width: 90%
     }
 
     input::placeholder {
