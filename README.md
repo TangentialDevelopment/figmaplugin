@@ -18,3 +18,4 @@
 09-19 introduced draggability  
 09-20 cosmetic draggability  
 09-23 reset to draggability  
+09-24 readjusted to li structure  

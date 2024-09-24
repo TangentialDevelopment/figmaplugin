@@ -41,19 +41,19 @@
     width: 100%;
     padding: 0 5%;
 
-    ul {
-        list-style: none;
-        min-width: 100%;
-    }
-
-    input {
-        flex: 90%;
-        width: 90%
-    }
-
     input::placeholder {
         padding-left: 15px;
     }
+}
+
+ul {
+    list-style: none;
+    min-width: 100%;
+}
+
+input {
+    flex: 90%;
+    width: 90%
 }
 
 #done {
