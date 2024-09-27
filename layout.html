@@ -41,7 +41,7 @@
             </ul>
         </form>
         <form action="display" id="done">
-            <ul id="doneTasks"></ul>
+            <!-- <ul id="doneTasks"></ul> -->
         </form>
 
         <!-- <input type="text" id="field1">
@@ -56,8 +56,8 @@
         $('#done').hide();
         var doneCount = document.getElementById('done').getElementsByTagName('input').length;
         document.getElementById('doneCount').innerHTML = doneCount;
-        var doneCount = document.getElementById('form').getElementsByTagName('input').length;
-        document.getElementById('todoCount').innerHTML = doneCount - 1;
+        var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+        document.getElementById('todoCount').innerHTML = doneCount;
 
         count = 0;
         function newTask(index) {
@@ -72,26 +72,26 @@
         }
 
         function doneTask(index, place, entry) {
-            let draggable = document.createElement('li');
-            draggable.setAttribute('id', index);
-            draggable.setAttribute('class', 'dropzone');
-            draggable.setAttribute('draggable', true);
+            // let draggable = document.createElement('li');
+            // draggable.setAttribute('id', index);
+            // draggable.setAttribute('class', 'dropzone');
+            // draggable.setAttribute('draggable', true);
             let done = document.createElement('input');
             done.setAttribute('type',"text");
             done.setAttribute('class',"task "+ index);
             done.setAttribute('value', entry);
             done.setAttribute('oninput',"typed(" + place + ")");
-            // document.getElementById('done').appendChild(done);
+            document.getElementById('done').appendChild(done);
             let open = document.createElement('button');
             let attr = 'btn btn-primary reopen ' + index;
             open.setAttribute('class', attr);
             open.setAttribute("type", 'button');
             open.setAttribute("onclick", 'reopen('+ index +')');
             open.innerHTML = 'x';
-            draggable.appendChild(done);
-            draggable.appendChild(open);
-            // document.getElementById('done').appendChild(open);
-            document.getElementById('doneTasks').appendChild(draggable);
+            // draggable.appendChild(done);
+            // draggable.appendChild(open);
+            document.getElementById('done').appendChild(open);
+            // document.getElementById('doneTasks').appendChild(draggable);
         }
 
         function reopenTask(index, entry) {
@@ -141,8 +141,8 @@
 
                 var doneCount = document.getElementById('done').getElementsByTagName('input').length;
                 document.getElementById('doneCount').innerHTML = doneCount;
-                var doneCount = document.getElementById('form').getElementsByTagName('input').length;
-                document.getElementById('todoCount').innerHTML = doneCount - 1;
+                var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+                document.getElementById('todoCount').innerHTML = todoCount;
             }
         }
 
@@ -167,23 +167,23 @@
             btn.remove();
             spot.remove();
 
-            var doneCount = document.getElementById('doneTasks').getElementsByTagName('input').length;
+            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
             document.getElementById('doneCount').innerHTML = doneCount;
-            var doneCount = document.getElementById('openTasks').getElementsByTagName('input').length;
-            document.getElementById('todoCount').innerHTML = doneCount - 1;
+            var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+            document.getElementById('todoCount').innerHTML = todoCount;
         }
 
         function reopen(index) {
-            let tasklist = document.getElementById('doneTasks').getElementsByTagName('input');
-            let tasklistbtn = document.getElementById('doneTasks').getElementsByTagName('button');
-            let taskrow = document.getElementById('doneTasks').getElementsByTagName('li');
+            let tasklist = document.getElementById('done').getElementsByTagName('input');
+            let tasklistbtn = document.getElementById('done').getElementsByTagName('button');
+            // let taskrow = document.getElementById('done').getElementsByTagName('li');
 
             for(let i=0; i<tasklist.length; i++) {
                 let value = tasklist[i].classList[1];
                 if (value == index) {
                     var place = tasklist[i];
                     var btn = tasklistbtn[i];
-                    var spot = taskrow[i];
+                    // var spot = taskrow[i];
                 }
             }
 
@@ -193,11 +193,12 @@
 
             place.remove();
             btn.remove();
-            spot.remove();
-            var doneCount = document.getElementById('doneTasks').getElementsByTagName('input').length;
+            // spot.remove();
+
+            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
             document.getElementById('doneCount').innerHTML = doneCount;
-            var doneCount = document.getElementById('openTasks').getElementsByTagName('input').length;
-            document.getElementById('todoCount').innerHTML = doneCount - 1;
+            var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+            document.getElementById('todoCount').innerHTML = todoCount;
         }
 
         document.getElementById('completed').onclick = () => {
