@@ -81,7 +81,7 @@
             done.setAttribute('type',"text");
             done.setAttribute('class',"task "+ index);
             done.setAttribute('value', entry);
-            done.setAttribute('oninput',"typed(" + place + ")");
+            done.setAttribute('onchange',"typed(" + place + ")");
             document.getElementById('done').appendChild(done);
             // let open = document.createElement('button');
             // let attr = 'btn btn-primary reopen ' + index;
@@ -115,7 +115,7 @@
             let attr = 'form-check-input reopen' + index;
             reopenbtn.setAttribute('class', attr);
             reopenbtn.setAttribute("type", 'checkbox');
-            reopenbtn.setAttribute("onclick", 'reopen('+ index +')');
+            reopenbtn.setAttribute("onchange", 'reopen('+ index +')');
             // document.getElementById('form').prepend(reopenbtn);
             let reopen = document.createElement('input');
             reopen.setAttribute('type',"text");
@@ -146,7 +146,7 @@
                 let attr = 'form-check-input reopen' + index;
                 close.setAttribute('class', attr);
                 close.setAttribute("type", 'checkbox');
-                close.setAttribute("onclick", 'reopen('+ index +')');
+                close.setAttribute("onchange", 'reopen('+ index +')');
 
                 draggable.appendChild(input);
                 draggable.appendChild(close);

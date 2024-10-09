@@ -25,3 +25,4 @@
 10-01 changes needed on draggability  
 10-03 collage work day  
 10-07 added checkmark instead of x  
+10-08 work on checkmark  
