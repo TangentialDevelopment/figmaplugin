@@ -143,10 +143,10 @@
                 // close.setAttribute("onclick", 'finished('+ update +')');
                 // close.innerHTML = 'x';
                 let close = document.createElement('input')
-                let attr = 'form-check-input reopen' + index;
+                let attr = 'form-check-input reopen' + update;
                 close.setAttribute('class', attr);
                 close.setAttribute("type", 'checkbox');
-                close.setAttribute("onchange", 'reopen('+ index +')');
+                close.setAttribute("onchange", 'finished('+ update +')');
 
                 draggable.appendChild(input);
                 draggable.appendChild(close);
@@ -165,7 +165,7 @@
 
         function finished(index) {
             let tasklist = document.getElementById('openTasks').getElementsByTagName('input');
-            let tasklistbtn = document.getElementById('openTasks').getElementsByTagName('button');
+            let tasklistbtn = document.getElementById('openTasks').getElementsByClassName('form-check-input');
             let taskrow = document.getElementById('openTasks').getElementsByTagName('li');
 
             for(let i=0; i<tasklist.length; i++) {
@@ -184,15 +184,15 @@
             btn.remove();
             spot.remove();
 
-            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+            var doneCount = document.getElementById('done').getElementsByClassName('form-check-input').length;
             document.getElementById('doneCount').innerHTML = doneCount;
-            var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+            var todoCount = document.getElementById('openTasks').getElementsByClassName('form-check-input').length;
             document.getElementById('todoCount').innerHTML = todoCount;
         }
 
         function reopen(index) {
             let tasklist = document.getElementById('done').getElementsByTagName('input');
-            let tasklistbtn = document.getElementById('done').getElementsByTagName('button');
+            let tasklistbtn = document.getElementById('done').getElementsByClassName('form-check-input');
             // let taskrow = document.getElementById('done').getElementsByTagName('li');
 
             for(let i=0; i<tasklist.length; i++) {
