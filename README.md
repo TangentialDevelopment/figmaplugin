@@ -29,3 +29,4 @@
 10-10 collage work day  
 11-18 fixed close/open bug  
 11-19 converted to figma plugin  
+11-22 resized and styled plugin  
