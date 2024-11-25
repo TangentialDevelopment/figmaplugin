@@ -24,7 +24,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
-        .box{max-width:80%;padding:10%}.title{display:flex;flex-direction:row;justify-content:space-around}.title .title-child{max-width:300px;margin:50px;display:flex;flex-direction:row;align-items:baseline;font-size:24px;color:gray;justify-content:center}.title .title-child p{margin:20px}.title .title-child .todo{padding:0px 7px;background-color:#add8e6;border-radius:50px}.active{border-bottom:1px blue solid;color:#a9a9a9}#form{display:flex;flex-wrap:wrap;width:100%;padding:0 5%}#form input::placeholder{padding-left:15px}ul{list-style:none;min-width:100%}input{flex:90%;width:90%}input:focus::placeholder{color:rgba(0,0,0,0)}#done{text-decoration:line-through}.btn{margin-left:15px}/*# sourceMappingURL=ui.css.map */
+        .box{max-width:80%;padding:10%}.title{display:flex;flex-direction:row;justify-content:space-around}.title .title-child{max-width:300px;display:flex;flex-direction:row;align-items:baseline;font-size:24px;color:gray;justify-content:center}.title .title-child p{margin:20px}.title .title-child .todo{padding:0px 7px;background-color:#add8e6;border-radius:50px}.active{border-bottom:1px blue solid;color:#a9a9a9}#form{display:flex;flex-wrap:wrap;width:100%;padding:0 5%}#form input::placeholder{padding-left:15px}ul{list-style:none;min-width:100%}input{flex:90%;width:90%}input:focus::placeholder{color:rgba(0,0,0,0)}#done{text-decoration:line-through}.btn{margin-left:15px}/*# sourceMappingURL=ui.css.map */
     </style>
   </head>
   <body>
@@ -223,16 +223,24 @@
         }
 
         document.getElementById('completed').onclick = () => {
-            $('#list').removeClass('active');
-            $('#form').hide();
-            $('#completed').addClass('active');
-            $('#done').show();
+            // $('#list').removeClass('active');
+            document.getElementById('list').classList.remove('active');
+            // $('#form').hide();
+            document.getElementById('form').classList.add('hide');
+            // $('#completed').addClass('active');
+            document.getElementById('completed').classList.add('active');
+            // $('#done').show();
+            document.getElementById('done').classList.remove('hide');
         }
         document.getElementById('list').onclick = () => {
-            $('#list').addClass('active');
-            $('#form').show();
-            $('#completed').removeClass('active');
-            $('#done').hide();
+            // $('#list').addClass('active');
+            document.getElementById('list').classList.add('active');
+            // $('#form').show();
+            document.getElementById('form').classList.remove('hide');
+            // $('#completed').removeClass('active');
+            document.getElementById('completed').classList.remove('active');
+            // $('#done').hide();
+            document.getElementById('done').classList.add('hide');
         }
 
         let dragged;

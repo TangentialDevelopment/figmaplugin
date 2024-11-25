@@ -3,6 +3,10 @@
     padding: 10%;
 }
 
+.hide {
+    display: none;
+}
+
 .title {
     display: flex;
     flex-direction: row;
@@ -10,7 +14,6 @@
 
     .title-child {
         max-width: 300px;
-        margin: 50px;
         display: flex;
         flex-direction: row;
         align-items: baseline;
