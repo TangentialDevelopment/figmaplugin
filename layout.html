@@ -58,7 +58,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-        $('#done').hide();
+        document.getElementById('done').classList.add('hide');
         var doneCount = document.getElementById('done').getElementsByTagName('input').length;
         document.getElementById('doneCount').innerHTML = doneCount;
         var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
@@ -119,7 +119,7 @@
             let attr = 'form-check-input reopen' + index;
             reopenbtn.setAttribute('class', attr);
             reopenbtn.setAttribute("type", 'checkbox');
-            reopenbtn.setAttribute("onchange", 'reopen('+ index +')');
+            reopenbtn.setAttribute("onchange", 'finished('+ index +')');
             // document.getElementById('form').prepend(reopenbtn);
             let reopen = document.createElement('input');
             reopen.setAttribute('type',"text");
@@ -164,6 +164,7 @@
                 document.getElementById('doneCount').innerHTML = doneCount;
                 var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
                 document.getElementById('todoCount').innerHTML = todoCount;
+                input.focus();
             }
         }
 
@@ -205,6 +206,7 @@
                     var place = tasklist[i];
                     var btn = tasklistbtn[i];
                     // var spot = taskrow[i];
+                    break;
                 }
             }
 

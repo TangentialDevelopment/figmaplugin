@@ -31,3 +31,4 @@
 11-19 converted to figma plugin  
 11-22 resized and styled plugin  
 11-25 fixing bug  
+11-26 bug fixes  
