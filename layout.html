@@ -24,7 +24,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
-        .box{max-width:80%;padding:10%}.title{display:flex;flex-direction:row;justify-content:space-around}.title .title-child{max-width:300px;display:flex;flex-direction:row;align-items:baseline;font-size:24px;color:gray;justify-content:center}.title .title-child p{margin:20px}.title .title-child .todo{padding:0px 7px;background-color:#add8e6;border-radius:50px}.active{border-bottom:1px blue solid;color:#a9a9a9}#form{display:flex;flex-wrap:wrap;width:100%;padding:0 5%}#form input::placeholder{padding-left:15px}ul{list-style:none;min-width:100%}input{flex:90%;width:90%}input:focus::placeholder{color:rgba(0,0,0,0)}#done{text-decoration:line-through}.btn{margin-left:15px}/*# sourceMappingURL=ui.css.map */
+.box{padding:10%}.hide{display:none}.title{display:flex;flex-direction:row;justify-content:space-around;margin-bottom:5px}.title .title-child{max-width:300px;display:flex;flex-direction:row;align-items:baseline;font-size:24px;color:gray;justify-content:center}.title .title-child p{margin:20px}.title .title-child .todo{padding:0px 7px;background-color:#add8e6;border-radius:50px}.active{border-bottom:1px blue solid;color:#a9a9a9}.inputs{width:100%;padding:0 5%}.inputs input::placeholder{padding-left:15px}ul{list-style:none;min-width:100%}input{flex:90%}input:focus::placeholder{color:rgba(0,0,0,0)}#done{text-decoration:line-through;color:red}.btn{margin-left:15px}.dropzone{min-width:fit-content}.task{width:75%}/*# sourceMappingURL=ui.css.map */
+
     </style>
   </head>
   <body>
@@ -40,12 +41,12 @@
                 <p class="done" id="doneCount"></p>
             </div>
         </div>
-        <form action="create" id="form">
+        <form action="create" id="form" class="inputs">
             <ul id="openTasks">
                 <input type="text" class="task 0"  placeholder="+ Add New Task"  oninput="typed(0)">
             </ul>
         </form>
-        <form action="display" id="done">
+        <form action="display" id="done" class="inputs">
             <!-- <ul id="doneTasks"></ul> -->
         </form>
 

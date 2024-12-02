@@ -32,3 +32,4 @@
 11-22 resized and styled plugin  
 11-25 fixing bug  
 11-26 bug fixes  
+12-02 standardization of styles  
