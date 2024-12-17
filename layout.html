@@ -43,7 +43,7 @@
         </div>
         <form action="create" id="form" class="inputs">
             <ul id="openTasks">
-                <input type="text" class="task 0"  placeholder="+ Add New Task"  oninput="typed(0)">
+                <!-- <input type="text" class="task 0"  placeholder="+ Add New Task"  oninput="typed(0)"> -->
             </ul>
         </form>
         <form action="display" id="done" class="inputs">
@@ -59,240 +59,263 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('done').classList.add('hide');
-            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
-            document.getElementById('doneCount').innerHTML = doneCount;
-            var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
-            document.getElementById('todoCount').innerHTML = doneCount;
+        document.getElementById('done').classList.add('hide');
+        var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+        document.getElementById('doneCount').innerHTML = doneCount;
+        var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+        document.getElementById('todoCount').innerHTML = doneCount;
+        var count = 0;
 
-            var count = 0;
-
-            function newTask(index) {
-                let newInput = document.createElement('input');
-                newInput.setAttribute('type',"text");
-                newInput.setAttribute('class',"task " + index);
-                // newInput.setAttribute('draggable', true);
-                newInput.setAttribute('placeholder',"+ Add New Task");
-                newInput.setAttribute('oninput',"typed(" + index + ")");
-
-                return newInput;
-            }
-
-            function doneTask(index, place, entry) {
-                // let draggable = document.createElement('li');
-                // draggable.setAttribute('id', index);
-                // draggable.setAttribute('class', 'dropzone');
-                // draggable.setAttribute('draggable', true);
-                let done = document.createElement('input');
-                done.setAttribute('type',"text");
-                done.setAttribute('class',"task "+ index);
-                done.setAttribute('value', entry);
-                done.setAttribute('onchange',"typed(" + place + ")");
-                document.getElementById('done').appendChild(done);
-                // let open = document.createElement('button');
-                // let attr = 'btn btn-primary reopen ' + index;
-                // open.setAttribute('class', attr);
-                // open.setAttribute("type", 'button');
-                // open.setAttribute("onclick", 'reopen('+ index +')');
-                // open.innerHTML = 'x';
-                let open = document.createElement('input')
-                let attr = 'form-check-input reopen' + index;
-                open.setAttribute('class', attr);
-                open.setAttribute("type", 'checkbox');
-                open.setAttribute("onclick", 'reopen('+ index +')');
-                // draggable.appendChild(done);
-                // draggable.appendChild(open);
-                document.getElementById('done').appendChild(open);
-                // document.getElementById('doneTasks').appendChild(draggable);
-            }
-
-            function reopenTask(index, entry) {
+        if (sessionStorage.length > 0) {
+            for (let i=0; i<sessionStorage.length; i++) {
                 let draggable = document.createElement('li');
-                draggable.setAttribute('id', index);
+                draggable.setAttribute('id', i);
                 draggable.setAttribute('class', 'dropzone');
                 draggable.setAttribute('draggable', true);
-                // let reopenbtn = document.createElement('button');
-                // let attr = 'btn btn-primary reopen ' + index;
-                // reopenbtn.setAttribute('class', attr);
-                // reopenbtn.setAttribute("type", 'button');
-                // reopenbtn.setAttribute("onclick", 'finished('+ index +')');
-                // reopenbtn.innerHTML = 'x';
                 let reopenbtn = document.createElement('input')
-                let attr = 'form-check-input reopen' + index;
+                let attr = 'form-check-input reopen' + i;
                 reopenbtn.setAttribute('class', attr);
                 reopenbtn.setAttribute("type", 'checkbox');
-                reopenbtn.setAttribute("onchange", 'finished('+ index +')');
-                // document.getElementById('form').prepend(reopenbtn);
+                reopenbtn.setAttribute("onchange", 'finished('+ i +')');
                 let reopen = document.createElement('input');
                 reopen.setAttribute('type',"text");
-                reopen.setAttribute('class',"task "+ index);
-                reopen.setAttribute('value', entry);
-                // document.getElementById('form').prepend(reopen);
+                reopen.setAttribute('class',"task "+ i);
+                reopen.setAttribute('value', sessionStorage.getItem(i));
                 draggable.appendChild(reopen);
                 draggable.appendChild(reopenbtn);
                 document.getElementById('openTasks').appendChild(draggable);
             }
+            count = sessionStorage.length;
+        }
 
-            function typed(update) {
-                let size = document.querySelectorAll('.task').length;
-                let input = document.querySelectorAll('.task')[size-1];
-                
-                if (input.value != '') {
-                    let draggable = document.createElement('li');
-                    draggable.setAttribute('id', update);
-                    draggable.setAttribute('class', 'dropzone');
-                    draggable.setAttribute('draggable', true);
-                    // let close = document.createElement('button');
-                    // let attr = 'btn btn-primary delete ' + update;
-                    // close.setAttribute('class', attr);
-                    // close.setAttribute("type", 'button');
-                    // close.setAttribute("onclick", 'finished('+ update +')');
-                    // close.innerHTML = 'x';
-                    let close = document.createElement('input')
-                    let attr = 'form-check-input reopen' + update;
-                    close.setAttribute('class', attr);
-                    close.setAttribute("type", 'checkbox');
-                    close.setAttribute("onchange", 'finished('+ update +')');
+        document.getElementById('form').appendChild(newTask(count));
 
-                    draggable.appendChild(input);
-                    draggable.appendChild(close);
-                    document.getElementById('openTasks').appendChild(draggable);
+        document.getElementById('list').onclick = () => {
+            // $('#list').addClass('active');
+            document.getElementById('list').classList.add('active');
+            // $('#form').show();
+            document.getElementById('form').classList.remove('hide');
+            // $('#completed').removeClass('active');
+            document.getElementById('completed').classList.remove('active');
+            // $('#done').hide();
+            document.getElementById('done').classList.add('hide');
+        }
 
+        let dragged;
+        let id;
+        let index;
+        let indexDrop;
+        let list;
 
-                    count += 1;
-                    document.getElementById('form').appendChild(newTask(count));
-
-                    var doneCount = document.getElementById('done').getElementsByTagName('input').length;
-                    document.getElementById('doneCount').innerHTML = doneCount;
-                    var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
-                    document.getElementById('todoCount').innerHTML = todoCount;
-                    input.focus();
-                }
-
-                let task = document.getElementsByClassName('task')[update].value;
-                if (task == '') {
-                    sessionStorage.removeItem(update);
-                } else {
-                    sessionStorage.setItem(update, task);
+        document.addEventListener("dragstart", ({target}) => {
+            dragged = target;
+            id = target.id;
+            list = target.parentNode.children;
+            for(let i = 0; i < list.length; i += 1) {
+                if(list[i] === dragged){
+                index = i;
                 }
             }
+        });
 
-            function finished(index) {
-                let tasklist = document.getElementById('openTasks').getElementsByTagName('input');
-                let tasklistbtn = document.getElementById('openTasks').getElementsByClassName('form-check-input');
-                let taskrow = document.getElementById('openTasks').getElementsByTagName('li');
+        document.addEventListener("dragover", (event) => {
+            event.preventDefault();
+        });
 
-                for(let i=0; i<tasklist.length; i++) {
-                    let value = tasklist[i].classList[1];
-                    if (value == index) {
-                        var place = tasklist[i];
-                        var btn = tasklistbtn[i];
-                        var spot = taskrow[i];
-                    }
+        document.addEventListener("drop", ({target}) => {
+        if(target.className == "dropzone" && target.id !== id) {
+            dragged.remove( dragged );
+            for(let i = 0; i < list.length; i += 1) {
+                if(list[i] === target){
+                indexDrop = i;
                 }
-
-                let entry = place.value;
-                doneTask(index, place, entry);
-
-                place.remove();
-                btn.remove();
-                spot.remove();
-
-                var doneCount = document.getElementById('done').getElementsByClassName('form-check-input').length;
-                document.getElementById('doneCount').innerHTML = doneCount;
-                var todoCount = document.getElementById('openTasks').getElementsByClassName('form-check-input').length;
-                document.getElementById('todoCount').innerHTML = todoCount;
             }
+            // console.log(index, indexDrop);
+            if(index > indexDrop) {
+                target.before( dragged );
+            } else {
+            target.after( dragged );
+            }
+            }
+        });
 
-            function reopen(index) {
-                let tasklist = document.getElementById('done').getElementsByTagName('input');
-                let tasklistbtn = document.getElementById('done').getElementsByClassName('form-check-input');
-                // let taskrow = document.getElementById('done').getElementsByTagName('li');
+        function newTask(index) {
+            let newInput = document.createElement('input');
+            newInput.setAttribute('type',"text");
+            newInput.setAttribute('class',"task " + index);
+            // newInput.setAttribute('draggable', true);
+            newInput.setAttribute('placeholder',"+ Add New Task");
+            newInput.setAttribute('oninput',"typed(" + index + ")");
 
-                for(let i=0; i<tasklist.length; i++) {
-                    let value = tasklist[i].classList[1];
-                    if (value == index) {
-                        var place = tasklist[i];
-                        var btn = tasklistbtn[i];
-                        // var spot = taskrow[i];
-                        break;
-                    }
-                }
+            return newInput;
+        }
 
-                let entry = place.value;
-                reopenTask(index, entry);
+        function doneTask(index, place, entry) {
+            // let draggable = document.createElement('li');
+            // draggable.setAttribute('id', index);
+            // draggable.setAttribute('class', 'dropzone');
+            // draggable.setAttribute('draggable', true);
+            let done = document.createElement('input');
+            done.setAttribute('type',"text");
+            done.setAttribute('class',"task "+ index);
+            done.setAttribute('value', entry);
+            done.setAttribute('onchange',"typed(" + place + ")");
+            document.getElementById('done').appendChild(done);
+            // let open = document.createElement('button');
+            // let attr = 'btn btn-primary reopen ' + index;
+            // open.setAttribute('class', attr);
+            // open.setAttribute("type", 'button');
+            // open.setAttribute("onclick", 'reopen('+ index +')');
+            // open.innerHTML = 'x';
+            let open = document.createElement('input')
+            let attr = 'form-check-input reopen' + index;
+            open.setAttribute('class', attr);
+            open.setAttribute("type", 'checkbox');
+            open.setAttribute("onclick", 'reopen('+ index +')');
+            // draggable.appendChild(done);
+            // draggable.appendChild(open);
+            document.getElementById('done').appendChild(open);
+            // document.getElementById('doneTasks').appendChild(draggable);
+        }
+
+        function reopenTask(index, entry) {
+            let draggable = document.createElement('li');
+            draggable.setAttribute('id', index);
+            draggable.setAttribute('class', 'dropzone');
+            draggable.setAttribute('draggable', true);
+            // let reopenbtn = document.createElement('button');
+            // let attr = 'btn btn-primary reopen ' + index;
+            // reopenbtn.setAttribute('class', attr);
+            // reopenbtn.setAttribute("type", 'button');
+            // reopenbtn.setAttribute("onclick", 'finished('+ index +')');
+            // reopenbtn.innerHTML = 'x';
+            let reopenbtn = document.createElement('input')
+            let attr = 'form-check-input reopen' + index;
+            reopenbtn.setAttribute('class', attr);
+            reopenbtn.setAttribute("type", 'checkbox');
+            reopenbtn.setAttribute("onchange", 'finished('+ index +')');
+            // document.getElementById('form').prepend(reopenbtn);
+            let reopen = document.createElement('input');
+            reopen.setAttribute('type',"text");
+            reopen.setAttribute('class',"task "+ index);
+            reopen.setAttribute('value', entry);
+            // document.getElementById('form').prepend(reopen);
+            draggable.appendChild(reopen);
+            draggable.appendChild(reopenbtn);
+            document.getElementById('openTasks').appendChild(draggable);
+        }
+
+        function typed(update) {
+            let size = document.querySelectorAll('.task').length;
+            let input = document.querySelectorAll('.task')[size-1];
             
+            if (input.value != '') {
+                let draggable = document.createElement('li');
+                draggable.setAttribute('id', update);
+                draggable.setAttribute('class', 'dropzone');
+                draggable.setAttribute('draggable', true);
+                // let close = document.createElement('button');
+                // let attr = 'btn btn-primary delete ' + update;
+                // close.setAttribute('class', attr);
+                // close.setAttribute("type", 'button');
+                // close.setAttribute("onclick", 'finished('+ update +')');
+                // close.innerHTML = 'x';
+                let close = document.createElement('input')
+                let attr = 'form-check-input reopen' + update;
+                close.setAttribute('class', attr);
+                close.setAttribute("type", 'checkbox');
+                close.setAttribute("onchange", 'finished('+ update +')');
 
-                place.remove();
-                btn.remove();
-                // spot.remove();
+                draggable.appendChild(input);
+                draggable.appendChild(close);
+                document.getElementById('openTasks').appendChild(draggable);
+
+
+                count += 1;
+                document.getElementById('form').appendChild(newTask(count));
 
                 var doneCount = document.getElementById('done').getElementsByTagName('input').length;
                 document.getElementById('doneCount').innerHTML = doneCount;
                 var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
                 document.getElementById('todoCount').innerHTML = todoCount;
+                input.focus();
             }
 
-            document.getElementById('completed').onclick = () => {
-                // $('#list').removeClass('active');
-                document.getElementById('list').classList.remove('active');
-                // $('#form').hide();
-                document.getElementById('form').classList.add('hide');
-                // $('#completed').addClass('active');
-                document.getElementById('completed').classList.add('active');
-                // $('#done').show();
-                document.getElementById('done').classList.remove('hide');
+            let task = document.getElementsByClassName(update)[0].value;
+
+            if (task == '') {
+                sessionStorage.removeItem(update);
+            } else {
+                sessionStorage.setItem(update, task);
             }
-            document.getElementById('list').onclick = () => {
-                // $('#list').addClass('active');
-                document.getElementById('list').classList.add('active');
-                // $('#form').show();
-                document.getElementById('form').classList.remove('hide');
-                // $('#completed').removeClass('active');
-                document.getElementById('completed').classList.remove('active');
-                // $('#done').hide();
-                document.getElementById('done').classList.add('hide');
+        }
+
+        function finished(index) {
+            let tasklist = document.getElementById('openTasks').getElementsByTagName('input');
+            let tasklistbtn = document.getElementById('openTasks').getElementsByClassName('form-check-input');
+            let taskrow = document.getElementById('openTasks').getElementsByTagName('li');
+
+            for(let i=0; i<tasklist.length; i++) {
+                let value = tasklist[i].classList[1];
+                if (value == index) {
+                    var place = tasklist[i];
+                    var btn = tasklistbtn[i];
+                    var spot = taskrow[i];
+                }
             }
 
-            let dragged;
-            let id;
-            let index;
-            let indexDrop;
-            let list;
+            let entry = place.value;
+            doneTask(index, place, entry);
 
-            document.addEventListener("dragstart", ({target}) => {
-                dragged = target;
-                id = target.id;
-                list = target.parentNode.children;
-                for(let i = 0; i < list.length; i += 1) {
-                    if(list[i] === dragged){
-                    index = i;
-                    }
-                }
-            });
+            place.remove();
+            btn.remove();
+            spot.remove();
 
-            document.addEventListener("dragover", (event) => {
-                event.preventDefault();
-            });
+            var doneCount = document.getElementById('done').getElementsByClassName('form-check-input').length;
+            document.getElementById('doneCount').innerHTML = doneCount;
+            var todoCount = document.getElementById('openTasks').getElementsByClassName('form-check-input').length;
+            document.getElementById('todoCount').innerHTML = todoCount;
+        }
 
-            document.addEventListener("drop", ({target}) => {
-            if(target.className == "dropzone" && target.id !== id) {
-                dragged.remove( dragged );
-                for(let i = 0; i < list.length; i += 1) {
-                    if(list[i] === target){
-                    indexDrop = i;
-                    }
+        function reopen(index) {
+            let tasklist = document.getElementById('done').getElementsByTagName('input');
+            let tasklistbtn = document.getElementById('done').getElementsByClassName('form-check-input');
+            // let taskrow = document.getElementById('done').getElementsByTagName('li');
+
+            for(let i=0; i<tasklist.length; i++) {
+                let value = tasklist[i].classList[1];
+                if (value == index) {
+                    var place = tasklist[i];
+                    var btn = tasklistbtn[i];
+                    // var spot = taskrow[i];
+                    break;
                 }
-                // console.log(index, indexDrop);
-                if(index > indexDrop) {
-                    target.before( dragged );
-                } else {
-                target.after( dragged );
-                }
-                }
-            });
-        });
+            }
+
+            let entry = place.value;
+            reopenTask(index, entry);
+        
+
+            place.remove();
+            btn.remove();
+            // spot.remove();
+
+            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+            document.getElementById('doneCount').innerHTML = doneCount;
+            var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+            document.getElementById('todoCount').innerHTML = todoCount;
+        }
+
+        document.getElementById('completed').onclick = () => {
+            // $('#list').removeClass('active');
+            document.getElementById('list').classList.remove('active');
+            // $('#form').hide();
+            document.getElementById('form').classList.add('hide');
+            // $('#completed').addClass('active');
+            document.getElementById('completed').classList.add('active');
+            // $('#done').show();
+            document.getElementById('done').classList.remove('hide');
+        }
     </script>  
 </body>
 </html>
