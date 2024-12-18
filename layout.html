@@ -65,27 +65,31 @@
         var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
         document.getElementById('todoCount').innerHTML = doneCount;
         var count = 0;
+        // localStorage.clear();
 
-        if (sessionStorage.length > 0) {
-            for (let i=0; i<sessionStorage.length; i++) {
+
+        if (localStorage.length > 0) {
+            let place = Object.keys(localStorage).reverse();
+
+            for (let i=0; i<localStorage.length; i++) {
                 let draggable = document.createElement('li');
-                draggable.setAttribute('id', i);
+                draggable.setAttribute('id', place[i]);
                 draggable.setAttribute('class', 'dropzone');
                 draggable.setAttribute('draggable', true);
                 let reopenbtn = document.createElement('input')
-                let attr = 'form-check-input reopen' + i;
+                let attr = 'form-check-input reopen' + place[i];
                 reopenbtn.setAttribute('class', attr);
                 reopenbtn.setAttribute("type", 'checkbox');
-                reopenbtn.setAttribute("onchange", 'finished('+ i +')');
+                reopenbtn.setAttribute("onchange", 'finished('+ place[i] +')');
                 let reopen = document.createElement('input');
                 reopen.setAttribute('type',"text");
-                reopen.setAttribute('class',"task "+ i);
-                reopen.setAttribute('value', sessionStorage.getItem(i));
+                reopen.setAttribute('class',"task "+ place[i]);
+                reopen.setAttribute('value', localStorage.getItem(place[i]));
                 draggable.appendChild(reopen);
                 draggable.appendChild(reopenbtn);
                 document.getElementById('openTasks').appendChild(draggable);
             }
-            count = sessionStorage.length;
+            count = localStorage.length;
         }
 
         document.getElementById('form').appendChild(newTask(count));
@@ -244,32 +248,30 @@
             let task = document.getElementsByClassName(update)[0].value;
 
             if (task == '') {
-                sessionStorage.removeItem(update);
+                localStorage.removeItem(update);
             } else {
-                sessionStorage.setItem(update, task);
+                localStorage.setItem(update, task);
             }
+
+            // console.log(localStorage);
         }
 
         function finished(index) {
-            let tasklist = document.getElementById('openTasks').getElementsByTagName('input');
+            let tasklist = document.getElementById('openTasks').getElementsByClassName('task');
             let tasklistbtn = document.getElementById('openTasks').getElementsByClassName('form-check-input');
             let taskrow = document.getElementById('openTasks').getElementsByTagName('li');
-
-            for(let i=0; i<tasklist.length; i++) {
-                let value = tasklist[i].classList[1];
-                if (value == index) {
-                    var place = tasklist[i];
-                    var btn = tasklistbtn[i];
-                    var spot = taskrow[i];
-                }
-            }
+            
+            var place = tasklist[index];
+            var spot = taskrow[index];
+            var btn = tasklistbtn[index];
 
             let entry = place.value;
-            doneTask(index, place, entry);
 
+            localStorage.removeItem(index);
+            doneTask(index, place, entry); 
             place.remove();
             btn.remove();
-            spot.remove();
+            spot.remove();           
 
             var doneCount = document.getElementById('done').getElementsByClassName('form-check-input').length;
             document.getElementById('doneCount').innerHTML = doneCount;
