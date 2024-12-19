@@ -37,3 +37,4 @@
 12-16 added session storage  
 12-17 inital pulled storage  
 12-18 fixed completing and local storage  
+12-19 started done storage  

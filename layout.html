@@ -65,13 +65,23 @@
         var doneCount = document.getElementById('openTasks').getElementsByTagName('li').length;
         document.getElementById('todoCount').innerHTML = doneCount;
         var count = 0;
+
+        var done = localStorage.getItem('done');
+        if (done.length > 2) {
+            console.log('done detected');
+        } else {
+            var done = {};
+            localStorage.setItem('done', JSON.stringify(done));
+        }
+        
         // localStorage.clear();
+        // let test = JSON.parse(localStorage.getItem('done'));
+        // console.log(test['test']);
 
-
-        if (localStorage.length > 0) {
+        if (localStorage.length > 1) {
             let place = Object.keys(localStorage).reverse();
 
-            for (let i=0; i<localStorage.length; i++) {
+            for (let i=0; i<localStorage.length-1; i++) {
                 let draggable = document.createElement('li');
                 draggable.setAttribute('id', place[i]);
                 draggable.setAttribute('class', 'dropzone');
@@ -253,7 +263,7 @@
                 localStorage.setItem(update, task);
             }
 
-            // console.log(localStorage);
+            console.log(localStorage);
         }
 
         function finished(index) {
