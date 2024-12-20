@@ -66,8 +66,15 @@
         document.getElementById('todoCount').innerHTML = doneCount;
         var count = 0;
 
+        // localStorage.clear()
+        console.log(localStorage);
         var done = localStorage.getItem('done');
-        if (done.length > 2) {
+        if (!done) {
+            var done = {};
+            localStorage.setItem('done', JSON.stringify(done));
+        }
+
+        if (done.length > 4) {
             console.log('done detected');
         } else {
             var done = {};
@@ -274,11 +281,17 @@
             var place = tasklist[index];
             var spot = taskrow[index];
             var btn = tasklistbtn[index];
+            console.log(tasklist, index);
 
             let entry = place.value;
 
+            var doneArray = JSON.parse(localStorage.getItem('done'));
+            doneArray[index] = entry;
+
+            localStorage.setItem('done', JSON.stringify(doneArray));
             localStorage.removeItem(index);
             doneTask(index, place, entry); 
+
             place.remove();
             btn.remove();
             spot.remove();           
