@@ -4,11 +4,11 @@
   "description": "Your Figma Plugin",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "webpack",
     "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
     "watch": "npm run build -- --watch",
-    "sass": "sass --watch source/scss/:compiled/css/ --style compressed"
+    "sass": "sass --watch dist/source/scss/:dist/compiled/css/ --style compressed"
   },
   "author": "",
   "license": "",
@@ -18,7 +18,10 @@
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
-    "typescript": "^5.3.2"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
   },
   "eslintConfig": {
     "extends": [
