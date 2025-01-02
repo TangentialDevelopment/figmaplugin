@@ -63,7 +63,7 @@
         var count = 0;
 
         // localStorage.clear()
-        console.log(localStorage);
+        // console.log(localStorage);
         var done = localStorage.getItem('done');
 
         if (!done) {
@@ -83,7 +83,7 @@
         // console.log(test['test']);
 
         if (localStorage.length > 1) {
-            let place = Object.keys(localStorage).reverse();
+            let place = Object.keys(localStorage).sort();
 
             for (let i=0; i<localStorage.length-1; i++) {
                 let draggable = document.createElement('li');
@@ -147,19 +147,19 @@
         });
 
         document.addEventListener("drop", ({target}) => {
-        if(target.className == "dropzone" && target.id !== id) {
-            dragged.remove( dragged );
-            for(let i = 0; i < list.length; i += 1) {
-                if(list[i] === target){
-                indexDrop = i;
+            if(target.className == "dropzone" && target.id !== id) {
+                dragged.remove( dragged );
+                for(let i = 0; i < list.length; i += 1) {
+                    if (list[i] === target) {
+                    indexDrop = i;
+                    }
                 }
-            }
-            // console.log(index, indexDrop);
-            if(index > indexDrop) {
-                target.before( dragged );
-            } else {
-            target.after( dragged );
-            }
+                // console.log(index, indexDrop);
+                if(index > indexDrop) {
+                    target.before( dragged );
+                } else {
+                    target.after( dragged );
+                }
             }
         });
 
@@ -254,7 +254,6 @@
                 draggable.appendChild(close);
                 document.getElementById('openTasks').appendChild(draggable);
 
-
                 count += 1;
                 document.getElementById('form').appendChild(newTask(count));
 
@@ -262,16 +261,20 @@
                 document.getElementById('doneCount').innerHTML = doneCount;
                 var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
                 document.getElementById('todoCount').innerHTML = todoCount;
-                input.focus();
-            }
 
-            let task = document.getElementsByClassName(update)[0].value;
+                let task = document.getElementsByClassName(update)[0].value;
 
-            if (task == '') {
-                localStorage.removeItem(update);
+                if (task == '') {
+                    localStorage.removeItem(update);
+                } else {
+                    localStorage.setItem(update, task);
+                }
             } else {
-                localStorage.setItem(update, task);
+                document.querySelectorAll('.task')[update].remove();
+                document.querySelectorAll('.form-check-input')[update].remove();
             }
+
+            input.focus();
         }
 
         function finished(index) {
