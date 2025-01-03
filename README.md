@@ -42,3 +42,4 @@
 12-30 fixed counters  
 12-31 webpack  
 01-02 fixed sorting logic  
+01-03 recall finished tasks  
