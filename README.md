@@ -43,3 +43,4 @@
 12-31 webpack  
 01-02 fixed sorting logic  
 01-03 recall finished tasks  
+01-06 collage work  
