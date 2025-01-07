@@ -63,7 +63,6 @@
         var count = 0;
 
         // localStorage.clear()
-        // console.log(localStorage);
         var done = localStorage.getItem('done');
 
         if (!done) {
@@ -336,7 +335,11 @@
 
             let entry = place.value;
             reopenTask(index, entry);
-        
+
+            localStorage.setItem(index, entry);
+            let done = JSON.parse(localStorage.getItem('done'));
+            delete done[index];
+            localStorage.setItem('done', JSON.stringify(done));
 
             place.remove();
             btn.remove();
