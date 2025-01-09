@@ -45,3 +45,4 @@
 01-03 recall finished tasks  
 01-06 collage work  
 01-07 reopen task  
+01-09 fixed finishing task bug  

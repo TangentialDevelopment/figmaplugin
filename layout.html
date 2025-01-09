@@ -291,13 +291,9 @@
         }
 
         function finished(index) {
-            let tasklist = document.getElementById('openTasks').getElementsByClassName('task');
-            let tasklistbtn = document.getElementById('openTasks').getElementsByClassName('form-check-input');
-            let taskrow = document.getElementById('openTasks').getElementsByTagName('li');
-            
-            var place = tasklist[index];
-            var spot = taskrow[index];
-            var btn = tasklistbtn[index];
+            let spot = document.getElementById(index);
+            let place = spot.getElementsByClassName('task')[0];
+            let btn = spot.getElementsByClassName('form-check-input')[0];
 
             let entry = place.value;
 
@@ -308,8 +304,6 @@
             localStorage.removeItem(index);
             doneTask(index, place, entry); 
 
-            place.remove();
-            btn.remove();
             spot.remove();           
 
             var doneCount = document.getElementById('done').getElementsByClassName('form-check-input').length;
