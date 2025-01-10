@@ -46,3 +46,4 @@
 01-06 collage work  
 01-07 reopen task  
 01-09 fixed finishing task bug  
+01-10 styling changes  
