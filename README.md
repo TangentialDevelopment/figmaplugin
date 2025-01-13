@@ -47,3 +47,4 @@
 01-07 reopen task  
 01-09 fixed finishing task bug  
 01-10 styling changes  
+01-13 fixed update bug  

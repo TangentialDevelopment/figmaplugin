@@ -91,6 +91,12 @@
             localStorage.setItem('done', JSON.stringify(done));
         }
         
+        
+        // localStorage.clear();
+        // let test = JSON.parse(localStorage.getItem('done'));
+        // console.log(test['test']);
+
+
         // localStorage.clear();
         // let test = JSON.parse(localStorage.getItem('done'));
         // console.log(test['test']);
@@ -245,8 +251,14 @@
         function typed(update) {
             let size = document.querySelectorAll('.task').length;
             let input = document.querySelectorAll('.task')[size-1];
+            let typing = document.getElementsByClassName(update)[0];
             
-            if (input.value != '') {
+            if (input.value == '' && typing.value == '') {
+                document.getElementById('openTasks').querySelectorAll('li')[update].remove();
+                input.focus();
+                // document.querySelectorAll('.task')[update].remove();
+                // document.querySelectorAll('.form-check-input')[update].remove();
+            } else if (input.value != '') {
                 let draggable = document.createElement('li');
                 draggable.setAttribute('id', update);
                 draggable.setAttribute('class', 'dropzone');
@@ -270,24 +282,21 @@
                 count += 1;
                 document.getElementById('form').appendChild(newTask(count));
 
-                var doneCount = document.getElementById('done').getElementsByTagName('input').length;
-                document.getElementById('doneCount').innerHTML = doneCount;
-                var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
-                document.getElementById('todoCount').innerHTML = todoCount;
+                // let task = document.getElementsByClassName(update)[0].value;
 
-                let task = document.getElementsByClassName(update)[0].value;
-
-                if (task == '') {
-                    localStorage.removeItem(update);
-                } else {
-                    localStorage.setItem(update, task);
-                }
-            } else {
-                document.querySelectorAll('.task')[update].remove();
-                document.querySelectorAll('.form-check-input')[update].remove();
+                // if (task == '') {
+                //     localStorage.removeItem(update);
+                // } else {
+                //     localStorage.setItem(update, task);
+                // }
+                let typed = draggable.getElementsByClassName('task')[0];
+                typed.focus();
             }
 
-            input.focus();
+            var doneCount = document.getElementById('done').getElementsByTagName('input').length;
+            document.getElementById('doneCount').innerHTML = doneCount;
+            var todoCount = document.getElementById('openTasks').getElementsByTagName('li').length;
+            document.getElementById('todoCount').innerHTML = todoCount;
         }
 
         function finished(index) {
