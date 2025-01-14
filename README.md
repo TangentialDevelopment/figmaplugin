@@ -48,3 +48,4 @@
 01-09 fixed finishing task bug  
 01-10 styling changes  
 01-13 fixed update bug  
+01-14 local storage updates  

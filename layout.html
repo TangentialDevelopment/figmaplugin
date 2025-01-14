@@ -248,49 +248,47 @@
             document.getElementById('openTasks').appendChild(draggable);
         }
 
-        function typed(update) {
+        function typed(update) { //move to switch case
             let size = document.querySelectorAll('.task').length;
             let input = document.querySelectorAll('.task')[size-1];
             let typing = document.getElementsByClassName(update)[0];
+            let task = typing.value;
             
-            if (input.value == '' && typing.value == '') {
+            if (input.value == '' && task == '') {
                 document.getElementById('openTasks').querySelectorAll('li')[update].remove();
                 input.focus();
-                // document.querySelectorAll('.task')[update].remove();
-                // document.querySelectorAll('.form-check-input')[update].remove();
-            } else if (input.value != '') {
-                let draggable = document.createElement('li');
-                draggable.setAttribute('id', update);
-                draggable.setAttribute('class', 'dropzone');
-                draggable.setAttribute('draggable', true);
-                // let close = document.createElement('button');
-                // let attr = 'btn btn-primary delete ' + update;
-                // close.setAttribute('class', attr);
-                // close.setAttribute("type", 'button');
-                // close.setAttribute("onclick", 'finished('+ update +')');
-                // close.innerHTML = 'x';
-                let close = document.createElement('input')
-                let attr = 'form-check-input reopen' + update;
-                close.setAttribute('class', attr);
-                close.setAttribute("type", 'checkbox');
-                close.setAttribute("onchange", 'finished('+ update +')');
+            } else {
+                if (task != '' && input.value != '') {
+                    let draggable = document.createElement('li');
+                    draggable.setAttribute('id', update);
+                    draggable.setAttribute('class', 'dropzone');
+                    draggable.setAttribute('draggable', true);
+                    // let close = document.createElement('button');
+                    // let attr = 'btn btn-primary delete ' + update;
+                    // close.setAttribute('class', attr);
+                    // close.setAttribute("type", 'button');
+                    // close.setAttribute("onclick", 'finished('+ update +')');
+                    // close.innerHTML = 'x';
+                    let close = document.createElement('input')
+                    let attr = 'form-check-input reopen' + update;
+                    close.setAttribute('class', attr);
+                    close.setAttribute("type", 'checkbox');
+                    close.setAttribute("onchange", 'finished('+ update +')');
 
-                draggable.appendChild(input);
-                draggable.appendChild(close);
-                document.getElementById('openTasks').appendChild(draggable);
+                    draggable.appendChild(input);
+                    draggable.appendChild(close);
+                    document.getElementById('openTasks').appendChild(draggable);
 
-                count += 1;
-                document.getElementById('form').appendChild(newTask(count));
+                    count += 1;
+                    document.getElementById('form').appendChild(newTask(count));
+                }
+                typing.focus();
 
-                // let task = document.getElementsByClassName(update)[0].value;
-
-                // if (task == '') {
-                //     localStorage.removeItem(update);
-                // } else {
-                //     localStorage.setItem(update, task);
-                // }
-                let typed = draggable.getElementsByClassName('task')[0];
-                typed.focus();
+                if (task == '') {
+                    localStorage.removeItem(update);
+                } else {
+                    localStorage.setItem(update, task);
+                }
             }
 
             var doneCount = document.getElementById('done').getElementsByTagName('input').length;
