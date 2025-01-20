@@ -254,21 +254,16 @@
             let typing = document.getElementsByClassName(update)[0];
             let task = typing.value;
             
-            if (input.value == '' && task == '') {
-                document.getElementById('openTasks').querySelectorAll('li')[update].remove();
-                input.focus();
-            } else {
-                if (task != '' && input.value != '') {
+            switch(input.value, task) {
+                case input.value == '' && task == '':
+                    document.getElementById('openTasks').querySelectorAll('li')[update].remove();
+                    input.focus();
+                    break;
+                case task != '' && input.value != '':
                     let draggable = document.createElement('li');
                     draggable.setAttribute('id', update);
                     draggable.setAttribute('class', 'dropzone');
                     draggable.setAttribute('draggable', true);
-                    // let close = document.createElement('button');
-                    // let attr = 'btn btn-primary delete ' + update;
-                    // close.setAttribute('class', attr);
-                    // close.setAttribute("type", 'button');
-                    // close.setAttribute("onclick", 'finished('+ update +')');
-                    // close.innerHTML = 'x';
                     let close = document.createElement('input')
                     let attr = 'form-check-input reopen' + update;
                     close.setAttribute('class', attr);
@@ -281,15 +276,53 @@
 
                     count += 1;
                     document.getElementById('form').appendChild(newTask(count));
-                }
-                typing.focus();
-
-                if (task == '') {
-                    localStorage.removeItem(update);
-                } else {
-                    localStorage.setItem(update, task);
-                }
+                    break;
+                default:
+                    typing.focus();
+                    if (task == '') {
+                        localStorage.removeItem(update);
+                    } else {
+                        localStorage.setItem(update, task);
+                    }
+                    break;
             }
+
+            // if (input.value == '' && task == '') {
+            //     document.getElementById('openTasks').querySelectorAll('li')[update].remove();
+            //     input.focus();
+            // } else {
+            //     if (task != '' && input.value != '') {
+            //         let draggable = document.createElement('li');
+            //         draggable.setAttribute('id', update);
+            //         draggable.setAttribute('class', 'dropzone');
+            //         draggable.setAttribute('draggable', true);
+            //         // let close = document.createElement('button');
+            //         // let attr = 'btn btn-primary delete ' + update;
+            //         // close.setAttribute('class', attr);
+            //         // close.setAttribute("type", 'button');
+            //         // close.setAttribute("onclick", 'finished('+ update +')');
+            //         // close.innerHTML = 'x';
+            //         let close = document.createElement('input')
+            //         let attr = 'form-check-input reopen' + update;
+            //         close.setAttribute('class', attr);
+            //         close.setAttribute("type", 'checkbox');
+            //         close.setAttribute("onchange", 'finished('+ update +')');
+
+            //         draggable.appendChild(input);
+            //         draggable.appendChild(close);
+            //         document.getElementById('openTasks').appendChild(draggable);
+
+            //         count += 1;
+            //         document.getElementById('form').appendChild(newTask(count));
+            //     }
+            //     typing.focus();
+
+            //     if (task == '') {
+            //         localStorage.removeItem(update);
+            //     } else {
+            //         localStorage.setItem(update, task);
+            //     }
+            // }
 
             var doneCount = document.getElementById('done').getElementsByTagName('input').length;
             document.getElementById('doneCount').innerHTML = doneCount;
