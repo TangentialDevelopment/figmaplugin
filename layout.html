@@ -259,26 +259,27 @@
                     document.getElementById('openTasks').querySelectorAll('li')[update].remove();
                     input.focus();
                     break;
-                case task != '' && input.value != '':
-                    let draggable = document.createElement('li');
-                    draggable.setAttribute('id', update);
-                    draggable.setAttribute('class', 'dropzone');
-                    draggable.setAttribute('draggable', true);
-                    let close = document.createElement('input')
-                    let attr = 'form-check-input reopen' + update;
-                    close.setAttribute('class', attr);
-                    close.setAttribute("type", 'checkbox');
-                    close.setAttribute("onchange", 'finished('+ update +')');
-
-                    draggable.appendChild(input);
-                    draggable.appendChild(close);
-                    document.getElementById('openTasks').appendChild(draggable);
-
-                    count += 1;
-                    document.getElementById('form').appendChild(newTask(count));
-                    break;
                 default:
+                    if (task != '' && input.value != '') {
+                        let draggable = document.createElement('li');
+                        draggable.setAttribute('id', update);
+                        draggable.setAttribute('class', 'dropzone');
+                        draggable.setAttribute('draggable', true);
+                        let close = document.createElement('input')
+                        let attr = 'form-check-input reopen' + update;
+                        close.setAttribute('class', attr);
+                        close.setAttribute("type", 'checkbox');
+                        close.setAttribute("onchange", 'finished('+ update +')');
+
+                        draggable.appendChild(input);
+                        draggable.appendChild(close);
+                        document.getElementById('openTasks').appendChild(draggable);
+
+                        count += 1;
+                        document.getElementById('form').appendChild(newTask(count));
+                    }
                     typing.focus();
+
                     if (task == '') {
                         localStorage.removeItem(update);
                     } else {

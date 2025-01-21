@@ -51,3 +51,4 @@
 01-14 local storage updates  
 01-17 convert local storage  
 01-20 switched to case statements  
+01-21 fixed switch bug  
